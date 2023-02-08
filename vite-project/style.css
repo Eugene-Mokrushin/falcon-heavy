@@ -2,6 +2,7 @@
 
 html {
     scroll-behavior: smooth;
+    background-color: black;
 }
 
 * {
@@ -35,6 +36,35 @@ main {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     /* display: none; */
+}
+
+.loader {
+    z-index: 9999;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+}
+
+.loader svg {
+    z-index: 99999;
+    margin: 0 0 2em;
+    height: 100px;
+    width: 20%;
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto 1em;
+    display: inline-block;
+    vertical-align: top;
+    transform: scale(2);
+}
+
+.loader svg path,
+.loader svg rect {
+    fill: #FF6700;
 }
 
 .header {
@@ -167,9 +197,11 @@ main {
     gap: 11px;
 
 }
-.param  {
+
+.param {
     display: flex;
 }
+
 .name {
     min-width: 160px;
     font-style: normal;
