@@ -354,8 +354,7 @@ let mars = createPlanet1({
 });
 
 mars.position.set(20, -3, 20)
-mars.frustumCulled = false
-earth.frustumCulled = false
+
 scene.add(mars)
 
 
@@ -378,9 +377,11 @@ let rocket
 assetLoader.load('./models/rocket.glb', (gltf) => {
     rocket = gltf.scene
     rocket.scale.set(0.03, 0.03, 0.03)
-    rocket.position.set(-1, -1.98, 18)
-    rocket.rotation.set(0, -0.17, -1.57)
+    rocket.rotation.set(0, -1.57, 0)
+    rocket.position.set(15.1, -54, 20.6)
+    rocket.frustumCulled = false
     scene.add(rocket)
+
 
 }, undefined, (error) => console.log(error))
 
@@ -391,7 +392,6 @@ function moveCamera() {
         camera.position.y = t * 0.01
         camera.rotation.y = 0
         camera.position.x = 0
-        // model.position.x = 0
     } else if (Math.abs(t) >= 301 && Math.abs(t) < 1100) {
         camera.rotation.y = (t + 301) * 0.002
 
@@ -402,32 +402,26 @@ function moveCamera() {
         } else {
             camera.position.z = t * - 0.02
         }
-    } else if (Math.abs(t) >= 1100 && Math.abs(t) < 2101) {
-        if (Math.abs(t) >= 1100 && Math.abs(t) < 1801) {
-            camera.position.x = (t + 1100) * -0.02
-
-        }
-        rocket.rotation.set(0 + (t + 1100) * -0.01, 0, -1.57)
-        if (Math.abs(t) < 1500) {
-            rocket.position.set(-1 + (t + 1100) * -0.04, -1.98 + (t + 1100) * 0.009, 18 + (t + 1100) * -0.01)
-        } else if (Math.abs(t) >= 1500 && Math.abs(t) <= 1700) {
-            rocket.position.set(-1 + (t + 1100) * -0.04, -5.56 + (t + 1500) * -0.009, 18 + (t + 1100) * -0.01)
-        } else {
-            rocket.position.set(-1 + (t + 1100) * -0.04, -5.56 + (t + 1500) * -0.009, 42 + (t + 1100) * 0.03)
-        }
+    } else if (Math.abs(t) >= 1100 && Math.abs(t) < 1801) {
+        camera.position.z = 20
+        camera.rotation.y = -1.594
+        camera.position.x = (t + 1100) * -0.02
+        rocket.position.set(15.1, -54, 20.6)
     }
 
     if (Math.abs(t) >= 1801) {
+        if (window.innerWidth < 800) {
+            rocket.position.set(15.1, -14, 20.2)
+        } else {
+            rocket.position.set(camera.position.x + 1.3, -14, 20.6)
+        }
         camera.position.y = -2.78 + ((t + 1801) * 0.008)
+        console.log(camera.position)
     }
-    if (Math.abs(t) >= 2101) {
-        rocket.rotation.set(0, -1.57, 0)
-        rocket.position.set(15.1, -14, 20.6)
-    }
+
 }
 
 document.body.onscroll = moveCamera;
-moveCamera();
 // const controls = new OrbitControls(camera, renderer.domElement);
 function animate() {
     requestAnimationFrame(animate)
@@ -437,10 +431,23 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-animate()
+try {
+    animate()
+    moveCamera();
+} catch (error) {
+    animate()
+    moveCamera();
+}
 
 
+window.addEventListener('resize', onWindowResize, false);
+function onWindowResize() {
 
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
 
 
 document.querySelectorAll('.logo').forEach(el => el.addEventListener("mouseenter", () => {

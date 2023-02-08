@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -156,21 +158,35 @@ main {
 
 .paramsAndValues {
     margin-top: 45px;
-    display: flex;
-    gap: 130px;
 }
 
-.params,
-.values {
-    list-style-type: none;
+.params {
+    display: flex;
+    gap: 130px;
+    flex-direction: column;
+    gap: 11px;
+
+}
+.param  {
+    display: flex;
+}
+.name {
+    min-width: 160px;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 179.69%;
-    /* or 32px */
-
-
     color: #FFFFFF;
+}
+
+.value {
+    margin-left: 130px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 179.69%;
+    color: #FFFFFF;
+    white-space: nowrap;
 }
 
 .imperial {
@@ -264,7 +280,7 @@ main {
     border-radius: 6px;
     transition: transform .4s;
     transform: scale(1);
-    
+
 }
 
 .btn:active {
